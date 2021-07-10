@@ -1,0 +1,1129 @@
+{
+	"info": {
+		"_postman_id": "37aaaea1-47e4-42f4-99dc-14ed17b6ea1f",
+		"name": "PracticalTask",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Positive",
+			"item": [
+				{
+					"name": "Register a new user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function ()\r",
+									"{ \r",
+									"\r",
+									"pm.response.to.have.status(200);\r",
+									"\r",
+									"});\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set(\"email\", \"vukyarska.\" +_.random(0, 100000)+ \"@icloud.com\");\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"confirmPassword\": \"123456789Vi\",\r\n  \"email\": \"{{email}}\",\r\n  \"fullName\": \"Viktoria Viktoria Viktoria\",\r\n  \"password\": \"123456789Vi\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}authorization/registration",
+							"host": [
+								"{{url}}authorization"
+							],
+							"path": [
+								"registration"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Log in",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function ()\r",
+									"{ \r",
+									"\r",
+									"pm.response.to.have.status(200);\r",
+									"\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"\r",
+									"pm.collectionVariables.set(\"token\",pm.response.json().accessToken)"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"{{email}}\",\r\n  \"password\": \"123456789Vi\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}authorization/login",
+							"host": [
+								"{{url}}authorization"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add a new cause",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function ()\r",
+									"{ \r",
+									"\r",
+									"pm.response.to.have.status(200);\r",
+									"\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "{{login}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"campaignId\": 1,\r\n  \"description\": \"Test Cause\",\r\n  \"logo\": {\r\n    \"base64ImageContent\": \"image\",\r\n    \"imageExtension\": \"JPEG\"\r\n  },\r\n  \"name\": \"Test Cause\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}causes",
+							"host": [
+								"{{url}}causes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verifying that the new cause is present in the campaign",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function ()\r",
+									"{ \r",
+									"\r",
+									"pm.response.to.have.status(200);\r",
+									"\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}causes?campaignId=1",
+							"host": [
+								"{{url}}causes"
+							],
+							"query": [
+								{
+									"key": "campaignId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Log out",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function ()\r",
+									"{ \r",
+									"\r",
+									"pm.response.to.have.status(200);\r",
+									"\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}authorization/logout",
+							"host": [
+								"{{url}}authorization"
+							],
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify logging out",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 403\", function ()\r",
+									"{ \r",
+									"\r",
+									"pm.response.to.have.status(403);\r",
+									"\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}users/75\n?id=75",
+							"host": [
+								"{{url}}users"
+							],
+							"path": [
+								"75\n"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "75"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Negative",
+			"item": [
+				{
+					"name": "Register an existing user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 409\", function ()\r",
+									"{ \r",
+									"\r",
+									"pm.response.to.have.status(409);\r",
+									"\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"confirmPassword\": \"123456789Vi\",\r\n  \"email\": \"vukyarska@icloud.com\",\r\n  \"fullName\": \"Viktoria Viktoria Viktoria\",\r\n  \"password\": \"123456789Vi\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://qacademy-charitymate.int.devsmm.com/api/v1/authorization/registration",
+							"protocol": "https",
+							"host": [
+								"qacademy-charitymate",
+								"int",
+								"devsmm",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authorization",
+								"registration"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register an existing user with wrong request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 403\", function ()\r",
+									"{ \r",
+									"\r",
+									"pm.response.to.have.status(403);\r",
+									"\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"confirmPassword\": \"123456789Vi\",\r\n  \"email\": \"vukyarska@icloud.com\",\r\n  \"fullName\": \"Viktoria Viktoria Viktoria\",\r\n  \"password\": \"123456789Vi\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://qacademy-charitymate.int.devsmm.com/api/v1/authorization/registration",
+							"protocol": "https",
+							"host": [
+								"qacademy-charitymate",
+								"int",
+								"devsmm",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authorization",
+								"registration"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Log in with wrong credentials",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function ()\r",
+									"{ \r",
+									"\r",
+									"pm.response.to.have.status(404);\r",
+									"\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"vukyarka@icloud.com\",\r\n  \"password\": \"123456789Vi\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://qacademy-charitymate.int.devsmm.com/api/v1/authorization/login",
+							"protocol": "https",
+							"host": [
+								"qacademy-charitymate",
+								"int",
+								"devsmm",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authorization",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Log in with wrong request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 403\", function ()\r",
+									"{ \r",
+									"\r",
+									"pm.response.to.have.status(403);\r",
+									"\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"vukyarska@icloud.com\",\r\n  \"password\": \"123456789Vi\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://qacademy-charitymate.int.devsmm.com/api/v1/authorization/login",
+							"protocol": "https",
+							"host": [
+								"qacademy-charitymate",
+								"int",
+								"devsmm",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authorization",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add a new cause without authorization",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 403\", function ()\r",
+									"{ \r",
+									"\r",
+									"pm.response.to.have.status(403);\r",
+									"\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"campaignId\": 1,\r\n  \"description\": \"Test Cause\",\r\n  \"logo\": {\r\n    \"base64ImageContent\": \"image\",\r\n    \"imageExtension\": \"JPEG\"\r\n  },\r\n  \"name\": \"Test Cause\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://qacademy-charitymate.int.devsmm.com/api/v1/causes",
+							"protocol": "https",
+							"host": [
+								"qacademy-charitymate",
+								"int",
+								"devsmm",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"causes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add a new cause in a forbidden for adding causes phase",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 403\", function ()\r",
+									"{ \r",
+									"\r",
+									"pm.response.to.have.status(403);\r",
+									"\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"campaignId\": 2,\r\n  \"description\": \"Test Cause\",\r\n  \"logo\": {\r\n    \"base64ImageContent\": \"image\",\r\n    \"imageExtension\": \"JPEG\"\r\n  },\r\n  \"name\": \"Test Cause\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://qacademy-charitymate.int.devsmm.com/api/v1/causes",
+							"protocol": "https",
+							"host": [
+								"qacademy-charitymate",
+								"int",
+								"devsmm",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"causes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add a new cause with wrong request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 403\", function ()\r",
+									"{ \r",
+									"\r",
+									"pm.response.to.have.status(403);\r",
+									"\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"campaignId\": 1,\r\n  \"description\": \"Test Cause\",\r\n  \"logo\": {\r\n    \"base64ImageContent\": \"image\",\r\n    \"imageExtension\": \"JPEG\"\r\n  },\r\n  \"name\": \"Test Cause\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://qacademy-charitymate.int.devsmm.com/api/v1/causes",
+							"protocol": "https",
+							"host": [
+								"qacademy-charitymate",
+								"int",
+								"devsmm",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"causes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verifying that the new cause is present in the campaign wihtout authorization",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 403\", function ()\r",
+									"{ \r",
+									"\r",
+									"pm.response.to.have.status(403);\r",
+									"\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://qacademy-charitymate.int.devsmm.com/api/v1/causes?campaignId=1",
+							"protocol": "https",
+							"host": [
+								"qacademy-charitymate",
+								"int",
+								"devsmm",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"causes"
+							],
+							"query": [
+								{
+									"key": "campaignId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verifying that the new cause is present in the campaign with wrong request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 403\", function ()\r",
+									"{ \r",
+									"\r",
+									"pm.response.to.have.status(403);\r",
+									"\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://qacademy-charitymate.int.devsmm.com/api/v1/causes?campaignId=1",
+							"protocol": "https",
+							"host": [
+								"qacademy-charitymate",
+								"int",
+								"devsmm",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"causes"
+							],
+							"query": [
+								{
+									"key": "campaignId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Log out without authorization",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 403\", function ()\r",
+									"{ \r",
+									"\r",
+									"pm.response.to.have.status(403);\r",
+									"\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://qacademy-charitymate.int.devsmm.com/api/v1/authorization/logout",
+							"protocol": "https",
+							"host": [
+								"qacademy-charitymate",
+								"int",
+								"devsmm",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authorization",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Log out with wrong request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 403\", function ()\r",
+									"{ \r",
+									"\r",
+									"pm.response.to.have.status(403);\r",
+									"\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://qacademy-charitymate.int.devsmm.com/api/v1/authorization/logout",
+							"protocol": "https",
+							"host": [
+								"qacademy-charitymate",
+								"int",
+								"devsmm",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authorization",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify logging out without authotization",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 403\", function ()\r",
+									"{ \r",
+									"\r",
+									"pm.response.to.have.status(403);\r",
+									"\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://qacademy-charitymate.int.devsmm.com/api/v1/users/75",
+							"protocol": "https",
+							"host": [
+								"qacademy-charitymate",
+								"int",
+								"devsmm",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"75"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify logging out with wrong request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 403\", function ()\r",
+									"{ \r",
+									"\r",
+									"pm.response.to.have.status(403);\r",
+									"\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "id",
+								"value": "75",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://qacademy-charitymate.int.devsmm.com/api/v1/users/75",
+							"protocol": "https",
+							"host": [
+								"qacademy-charitymate",
+								"int",
+								"devsmm",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"75"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": ""
+		},
+		{
+			"key": "email",
+			"value": ""
+		}
+	]
+}
