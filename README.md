@@ -1,4 +1,4 @@
-- 👋 Hi, I’m Viktoria, I am 19 years old and I am studying in the Technical University of Sofia
+- 👋 Hi, I’m Viktoria, I am 20 years old and I am studying in the Technical University of Sofia
 - 👀 #Telecommunications #QA
 - 🌱 #QA
 
